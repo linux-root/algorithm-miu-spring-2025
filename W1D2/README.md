@@ -12,6 +12,26 @@
 - Second loop will find the second maximum value.
 - Third loop will find the third maximum value.
 
+```pseudo
+Algorithm findThirdLargest(a)
+  Input array a of integers with length >= 3
+  Output integer p of third largest number in array a
+
+  start <- 0
+  n <- a.length
+
+  for start <- 0 to 2 then #Fixed 3 loops
+     max <- a[start]
+     for i <- (start + 1) to (n - 1) do
+        if (a[i] > max) then
+           max <- a[i]
+           a[start] <- a[start] + a[i]
+           a[i] <- a[start] - a[i]
+           a[start] <- a[start] - a[i]
+
+  return a[2]
+```
+
 **Note**: It is possible that the first max == second max == third max, as in the array `[7, 20, 18, 4, 20, 19, 20, 3]`. In this case, the program should return `20`.
 
 #### Algorithm 2
