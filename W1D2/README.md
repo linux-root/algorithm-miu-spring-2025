@@ -13,13 +13,11 @@
 - Third loop will find the third maximum value.
 
 ```pseudo
-Algorithm findThirdLargest(a)
-  Input array a of integers with length >= 3
+Algorithm findThirdLargest(a, n)
+  Input array a of integers with length >= 3, n : length of the array
   Output integer p of third largest number in array a
 
   start <- 0
-  n <- a.length
-
   for start <- 0 to 2 then #Fixed 3 loops
      max <- a[start]
      for i <- (start + 1) to (n - 1) do
@@ -32,7 +30,9 @@ Algorithm findThirdLargest(a)
   return a[2]
 ```
 
-**Note**: It is possible that the first max == second max == third max, as in the array `[7, 20, 18, 4, 20, 19, 20, 3]`. In this case, the program should return `20`.
+**Note**: It is possible that the first max == second max == third max, as
+in the array `[7, 20, 18, 4, 20, 19, 20, 3]`. In this case,
+the program should return `20`.
 
 #### Algorithm 2
 
@@ -42,9 +42,47 @@ Algorithm findThirdLargest(a)
 - `preMax`: to store the second largest value.
 - `prePreMax`: to store the third largest value.
 
+```pseudo
+Algorithm findThirdLargest(a, n)
+  Input array a of integers with length >= 3, n : length of the array
+  Output integer p of third largest number in array a
+
+     max <- a[0]
+     preMax <- -1
+     prePreMax <- -1
+
+     for i <- 1 to n - 1 do
+        if (a[i] > prePreMax) && (a[i] < preMax) then
+           prePreMax <- a[i]
+        else if (a[i] > preMax && a[i] < max) then
+           prePreMax <- preMax
+           preMax = a[i]
+        else if (a[i] > max) then
+           prePreMax <- preMax
+           preMax <- max
+           max <- a[i]
+
+     return prePreMax
+```
+
 #### Algorithm 3
 
 **Idea**: Use an ordered dictionary.
+
+```pseudo
+Algorithm findThirdLargest(a, n)
+  Input array a of integers with length >= 3, n : length of the array
+  Output integer p of third largest number in array a
+     orderedDict <- [] # Ordered in descending order
+
+     for i <- 1 to n - 1 do
+        orderedDict <- orderDict + a[i]
+        if (orderedDict.length > 3){
+          orderedDict.dropLast()
+        }
+
+     return orderedList.getLast()
+```
 
 ---
 
@@ -61,7 +99,9 @@ Algorithm findThirdLargest(a)
 Consider the following functions and determine the relationships among their complexity classes:
 
 ```pseudo
-10, 1, n^3, n^(1/3), log(log n), n^2, n^(1/2), log n, log n^n, n^k (k > 3), n^(1/k) (k > 3), n log n, ln n, 2^n, 3^n, n^n, n^(1/2) log n, n^(1/3) log n, n!.
+10, 1, n^3, n^(1/3), log(log n), n^2, n^(1/2), log n, log n^n,
+n^k (k > 3), n^(1/k) (k > 3), n log n, ln n, 2^n,
+3^n, n^n, n^(1/2) log n, n^(1/3) log n, n!.
 ```
 
 **Notation Clarification**:
@@ -72,13 +112,20 @@ Consider the following functions and determine the relationships among their com
 
 The table is given in strict ascending order. Your task is to complete the table.
 
-| Function | Complexity Class |
-| -------- | ---------------- |
-| 10       | Θ(1)             |
-| 1        | Θ(1)             |
-| log n    | Θ(log n)         |
-| n^(1/2)  | Θ(√n)            |
-| ...      | ...              |
+| Function            | Complexity Class |
+| ------------------- | ---------------- |
+| 10, 1               | Θ(1)             |
+| log(log n) | Θ(log(logn))  |
+| log n,  ln n | Θ(log n)         |
+| nlog n,              | Θ(nlogn)            |
+| n^(1/k)  (k > 3)           | Θ(?)             |
+| n^(1/3)             | Θ(?)             |
+| n^(1/2)             | Θ(?)             |
+| n^(1/2) log n, n^(1/3)log n             | Θ(?)             |
+| n^2, n^3, n^k (k >3)            | Θ(n^k)             |
+| 2^n, 3^n            | Θ(k^n)             |
+| n!            | Θ(n!)             |
+| n^n                 | Θ(n^n)             |
 
 ---
 
@@ -86,7 +133,3 @@ The table is given in strict ascending order. Your task is to complete the table
 
 - For **Question 1**, focus on writing clear pseudo code, analyzing time complexity, and implementing the algorithms in Java for empirical comparison.
 - For **Question 2**, ensure you understand the relationships between the given functions and their complexity classes. Complete the table by filling in the missing entries.
-
-```
-
-```
